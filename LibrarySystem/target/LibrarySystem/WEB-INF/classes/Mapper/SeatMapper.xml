@@ -1,35 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dao.SeatMapper">
+<mapper namespace="com.dao.SeatMapper">
 
-    <insert id="addSeat" parameterType="Entity.Seat">
-        insert into librarysystem.seat(SeatId,SeatPosition,SeatStatus,Floor)
-         values(#{SeatId},#{SeatPosition},#{SeatStatus},#{Floor});
+    <insert id="addSeat" parameterType="com.pojo.Seat">
+        insert into librarysystem.seat(SeatId, SeatPosition, SeatStatus, Floor)
+        value (#{SeatId},#{SeatPosition},#{SeatStatus},#{Floor});
     </insert>
 
-
-    <delete id="deleteSeatById" parameterType="String">
-        delete from librarysystem.seat where SeatId = #{SeatId}
+    <delete id="deleteSeatBySeatId" parameterType="String">
+        delete from librarysystem.seat where SeatId = #{SeatId};
     </delete>
 
-
-    <update id="updateSeat" parameterType="Entity.Seat">
-        update librarysystem.seat
-        set SeatPosition = #{SeatPosition},
-            SeatStatus = #{SeatStatus},
-            Floor = #{Floor}
-        where SeatId = #{SeatId}
+    <update id="updateSeat" parameterType="com.pojo.Seat">
+        update librarysystem.seat set SeatStatus = #{SeatStatus} where SeatId = #{SeatId};
     </update>
 
-    <select id="querySeatById" resultType="Entity.Seat">
-        select * from librarysystem.seat
-        where SeatId = #{SeatId}
+    <select id="querySeatBySeatId" parameterType="String" resultType="com.pojo.Seat">
+        select * from librarysystem.seat where SeatId=#{SeatId};
     </select>
 
-    <select id="queryAllSeat" resultType="Entity.Seat">
-        select * from librarysystem.seat
+    <select id="queryAllSeat" resultType="com.pojo.Seat">
+        select * from librarysystem.seat;
     </select>
+
 
 </mapper>

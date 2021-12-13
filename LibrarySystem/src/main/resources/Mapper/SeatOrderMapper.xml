@@ -1,8 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dao.SeatOrderMapper">
+<mapper namespace="com.dao.SeatOrderMapper">
+
+    <insert id="addSeatOrder" parameterType="com.pojo.SeatOrder">
+        insert into librarysystem.seatorder(OrderDate,BeginTime,EndTime,Floor,SeatId,UserId,VerifyCode)
+            value (#{OrderDate},#{BeginTime},#{EndTime},#{Floor},#{SeatId},#{UserId},#{VerifyCode});
+    </insert>
+
+    <delete id="deleteSeatOrderByUserId" parameterType="int">
+        delete from librarysystem.seatorder where UserId = #{UserId};
+    </delete>
+
+    <delete id="deleteSeatOrderBySeatId" parameterType="String">
+        delete from librarysystem.seatorder where SeatId = #{SeatId};
+    </delete>
+
+    <delete id="deleteSeatOrderByOrderId" parameterType="int">
+        delete from librarysystem.seatorder where SeatId = #{OrderId};
+    </delete>
+
+
+    <update id="updateSeatOrder" parameterType="com.pojo.SeatOrder">
+        update librarysystem.seatorder
+        set OrderDate = #{OrderDate} ,BeginTime=#{BeginTime},EndTime=#{EndTime} ,VerifyCode=#{VerifyCode},Floor=#{Floor},SeatId=#{SeatId},UserId=#{UserId}
+        where OrderId = #{OrderId};
+    </update>
+
+    <select id="querySeatOrderByUserId" parameterType="int" resultType="com.pojo.SeatOrder">
+        select * from librarysystem.seatorder where UserId=#{UserId};
+    </select>
+
+    <select id="querySeatOrderBySeatId" parameterType="String" resultType="com.pojo.SeatOrder">
+        select * from librarysystem.seatorder where SeatId=#{SeatId};
+    </select>
+
+    <select id="queryAllSeatOrder" resultType="com.pojo.SeatOrder">
+        select * from librarysystem.seatorder;
+    </select>
+
+
+    <select id="querySeatOrderByConditions" parameterType="com.pojo.SeatOrder" resultType="com.pojo.SeatOrder">
+        select * from librarysystem.seatorder
+        where Floor = #{Floor}
+          AND OrderDate = #{OrderDate}
+          and (
+                (BeginTime &lt;= #{BeginTime} and EndTime > #{BeginTime}) OR
+                (EndTime >= #{EndTime} and BeginTime &lt; #{EndTime}) OR
+                (BeginTime >= #{BeginTime} and EndTime &lt;= #{EndTime})
+            )
+    </select>
 
 
 </mapper>

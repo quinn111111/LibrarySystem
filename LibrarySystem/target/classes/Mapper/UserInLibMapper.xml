@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dao.UserInLibMapper">
+<mapper namespace="com.dao.UserInLibMapper">
+
+    <insert id="addUserInLib" parameterType="com.pojo.UserInLib">
+        insert into librarysystem.userinlib(UserId, TimeInLib)
+            value (#{UserId},#{TimeInLib});
+    </insert>
+
+    <delete id="deleteUserInLibByUserId" parameterType="int">
+        delete from librarysystem.userinlib where UserId = #{UserId};
+    </delete>
+
+    <update id="updateUserInLib" parameterType="com.pojo.UserInLib">
+        update librarysystem.userinlib set TimeInLib = #{TimeInLib} where UserId = #{UserId};
+    </update>
+
+    <select id="queryUserInLibByUserId" parameterType="String" resultType="com.pojo.UserInLib">
+        select * from librarysystem.userinlib where UserId=#{UserId};
+    </select>
+
+    <select id="queryAllUserInLib" resultType="com.pojo.UserInLib">
+        select * from librarysystem.userinlib;
+    </select>
+
 
 </mapper>

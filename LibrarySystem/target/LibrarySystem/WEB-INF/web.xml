@@ -5,9 +5,8 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
-
   <servlet>
-    <servlet-name>dispatcher</servlet-name>
+    <servlet-name>springmvc</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
@@ -16,8 +15,12 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>dispatcher</servlet-name>
+    <servlet-name>springmvc</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+
+  <session-config>
+    <session-timeout>15</session-timeout>
+  </session-config>
 
 </web-app>

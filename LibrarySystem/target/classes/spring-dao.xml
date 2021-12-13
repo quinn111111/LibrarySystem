@@ -2,21 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:c="http://www.springframework.org/schema/c"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd
-       http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop.xsd">
+       http://www.springframework.org/schema/context/spring-context.xsd">
 
-
-    <!--关联数据库配置文件-->
     <context:property-placeholder location="classpath:database.properties"/>
 
-    <!--连接池-->
+
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driver}"/>
         <property name="jdbcUrl" value="${jdbc.url}"/>
@@ -24,26 +17,26 @@
         <property name="password" value="${jdbc.password}"/>
 
         <property name="maxPoolSize" value="30"/>
-        <property name="minPoolSize" value="10"/>
-        <property name="autoCommitOnClose" value="false"/>
+        <property name="minPoolSize" value="20"/>
         <property name="checkoutTimeout" value="10000"/>
         <property name="acquireRetryAttempts" value="2"/>
-
+        <property name="autoCommitOnClose" value="false"/>
     </bean>
 
-    <!--SQLSessionFactory-->
+    <bean id="transactionFactory" class="org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory" />
+
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <!--绑定mybatis配置文件-->
-        <property name="configLocation" value="classpath:mybatis-cofig.xml"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="transactionFactory" ref="transactionFactory" />
+
     </bean>
 
-    <!--配置dao接口扫描包，动态实现了Dao接口可以注入到Spring容器-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <!--注入sqlSessionFactory-->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-        <!--扫描dao包-->
-        <property name="basePackage" value="dao"/>
+        <property name="basePackage" value="com.dao"/>
+
     </bean>
+
 
 </beans>
