@@ -35,6 +35,12 @@
                             <li><a href="MyOrder">我的预约</a></li>
                             <li class="divider"></li>
                             <li><a href="#">退出登录</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/userInLib/ManageUserInLib">管理在馆人员</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/user/ManageUser">管理用户</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/seat/ManageSeat">管理座位</a></li>
                         </ul>
                     </li>
                 </ul>
