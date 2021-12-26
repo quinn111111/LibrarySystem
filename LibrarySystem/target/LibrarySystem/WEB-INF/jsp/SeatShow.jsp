@@ -1,8 +1,8 @@
-<%@ page import="com.pojo.SeatOrder"%><%--
+<%--
   Created by IntelliJ IDEA.
   User: han
-  Date: 2021/11/18
-  Time: 19:47
+  Date: 2021/12/19
+  Time: 21:21
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -17,24 +17,24 @@
     <script>
 
         function toCopy() {
-            document.getElementById("OrderDate2").value = document.getElementById("OrderDate").value;
+            document.getElementById("ReserveDate2").value = document.getElementById("ReserveDate").value;
             document.getElementById("BeginTime2").value = document.getElementById("BeginTime").value;
             document.getElementById("EndTime2").value = document.getElementById("EndTime").value;
-            document.getElementById("Floor2").value = document.getElementById("Floor").value;
+            document.getElementById("ReserveFloor2").value = document.getElementById("ReserveFloor").value;
             return true;
         }
 
         function toVaild(){
-            var orderDate = document.getElementById("OrderDate").value;
+            var ReserveDate = document.getElementById("ReserveDate").value;
             var beginTime = document.getElementById("BeginTime").value;
             var endTime = document.getElementById("EndTime").value;
 
-            var beginDate = new Date(orderDate+" "+beginTime);
+            var beginDate = new Date(ReserveDate+" "+beginTime);
             var nowDate = new Date();
-            var endDate = new Date(orderDate+" "+endTime);
+            var endDate = new Date(ReserveDate+" "+endTime);
 
-            var openDate = new Date(orderDate+" "+"08:00:00");
-            var closeDate = new Date(orderDate+" "+"22:00:00");
+            var openDate = new Date(ReserveDate+" "+"08:00:00");
+            var closeDate = new Date(ReserveDate+" "+"22:00:00");
 
             alert("beginDate="+beginDate+"nowDate="+nowDate+"endDate="+endDate);
 
@@ -81,7 +81,7 @@
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="FirstPage">座位预约</a>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/Reserve/FirstPage">座位预约</a>
             </div>
             <div>
                 <ul class="nav navbar-nav">
@@ -92,15 +92,17 @@
                         <ul class="dropdown-menu">
                             <li><a href="#">个人信息</a></li>
                             <li class="divider"></li>
-                            <li><a href="MyOrder">我的预约</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Reserve/MyReserve">我的预约</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/LibUser/ManageLibUser">管理在馆人员</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/User/ManageUser">管理用户</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/Seat/ManageSeat">管理座位</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/Reserve/ManageReserve">管理预约</a></li>
                             <li class="divider"></li>
                             <li><a href="#">退出登录</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/userInLib/ManageUserInLib">管理在馆人员</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/user/ManageUser">管理用户</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/seat/ManageSeat">管理座位</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -108,38 +110,39 @@
         </div>
     </nav>
 </div>
+
 <div style="margin-left: 10%;margin-right: 10%">
     <div style="width: 100%;"><!--整体-->
         <div style="padding: 50px">
             <form class="form-inline" role="form" action="SeatShow" method="post" onsubmit="toVaild()">
                 <div class="form-group">
-                    <label for="OrderDate">预约日期：</label>
-                    <input type="date" class="form-control" id="OrderDate" name="OrderDate"
-                    <c:if test="${seatOrder.orderDate!=null}">
-                           value="${seatOrder.orderDate}"
+                    <label for="ReserveDate">预约日期：</label>
+                    <input type="date" class="form-control" id="ReserveDate" name="ReserveDate"
+                    <c:if test="${reserve.reserveDate!=null}">
+                           value="${reserve.reserveDate}"
                     </c:if>
                     >
                 </div>
                 <div class="form-group">
                     <label for="BeginTime">到馆时间：</label>
                     <input type="time" class="form-control" id="BeginTime" name="BeginTime"
-                    <c:if test="${seatOrder.beginTime!=null}">
-                           value="${seatOrder.beginTime}"
+                    <c:if test="${reserve.beginTime!=null}">
+                           value="${reserve.beginTime}"
                     </c:if>
                     >
                 </div>
                 <div class="form-group">
                     <label for="EndTime">离馆时间：</label>
                     <input type="time" class="form-control" id="EndTime" name="EndTime"
-                    <c:if test="${seatOrder.endTime!=null}">
-                           value="${seatOrder.endTime}"
+                    <c:if test="${reserve.endTime!=null}">
+                           value="${reserve.endTime}"
                     </c:if>>
                 </div>
                 <div class="form-group">
-                    <label for="floor">选择楼层：</label>
-                    <select class="form-control" name="Floor" id="Floor"
-                            <c:if test="${seatOrder.floor!=null}">
-                                value="${seatOrder.floor}"
+                    <label for="ReserveFloor">选择楼层：</label>
+                    <select class="form-control" name="ReserveFloor" id="ReserveFloor"
+                            <c:if test="${reserve.reserveFloor!=null}">
+                                value="${reserve.reserveFloor}"
                             </c:if>>
                         >
                         <option>1</option>
@@ -357,16 +360,16 @@
         </table>
         <div style="width: 100%;padding: 50px">
 
-            <form class="form-inline" role="form" action="OrderConfirm" onsubmit="toCopy()">
+            <form class="form-inline" role="form" action="ReserveConfirm" onsubmit="toCopy()">
                 <div class="form-group">
                     <label class="sr-only" for="SeatId">座位位置：</label>
                     <input type="text" class="form-control" id="SeatId" name="SeatId"
                            placeholder="请输入座位位置：">
                 </div>
-                <input type="hidden" name="OrderDate" id="OrderDate2">
+                <input type="hidden" name="ReserveDate" id="ReserveDate2">
                 <input type="hidden" name="BeginTime" id="BeginTime2">
                 <input type="hidden" name="EndTime" id="EndTime2">
-                <input type="hidden" name="Floor" id="Floor2">
+                <input type="hidden" name="ReserveFloor" id="ReserveFloor2">
                 <div class="form-group">
                     <button type="submit" class="btn btn-default">点击预约</button>
                 </div>

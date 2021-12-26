@@ -10,17 +10,9 @@ import java.util.List;
 @Service
 public class SeatServiceImpl implements SeatService{
 
+
     @Autowired
     private SeatMapper seatMapper;
-
-    public SeatMapper getSeatMapper() {
-        return seatMapper;
-    }
-
-    public void setSeatMapper(SeatMapper seatMapper) {
-        this.seatMapper = seatMapper;
-    }
-
     @Override
     public int addSeat(Seat seat) {
         return seatMapper.addSeat(seat);
@@ -37,12 +29,12 @@ public class SeatServiceImpl implements SeatService{
     }
 
     @Override
-    public Seat querySeatBySeatId(String SeatId) {
-        return seatMapper.querySeatBySeatId(SeatId);
+    public List<Seat> queryAllSeat() {
+        return seatMapper.queryAllSeat();
     }
 
     @Override
-    public List<Seat> queryAllSeat() {
-        return seatMapper.queryAllSeat();
+    public Seat querySeatBySeatId(String SeatId) {
+        return seatMapper.querySeatBySeatId(SeatId);
     }
 }

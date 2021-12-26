@@ -9,19 +9,11 @@
 
     <context:component-scan base-package="com.service"/>
 
-    <bean id="seatServiceImpl" class="com.service.SeatServiceImpl">
-        <property name="seatMapper" ref="seatMapper"/>
+
+    <bean id="reserveServiceImpl" class="com.service.ReserveServiceImpl">
+        <property name="reserveMapper" ref="reserveMapper"/>
     </bean>
 
-    <bean id="seatOrderServiceImpl" class="com.service.SeatOrderServiceImpl">
-        <property name="seatOrderMapper" ref="seatOrderMapper"/>
-    </bean>
-    <bean id="userServiceImpl" class="com.service.UserServiceImpl">
-        <property name="userMapper" ref="userMapper"/>
-    </bean>
-    <bean id="userInLibServiceImpl" class="com.service.UserInLibServiceImpl">
-        <property name="userInLibMapper" ref="userInLibMapper"/>
-    </bean>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>

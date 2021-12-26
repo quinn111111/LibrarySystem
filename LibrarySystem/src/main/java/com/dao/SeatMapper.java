@@ -12,8 +12,8 @@ public interface SeatMapper {
 
     int updateSeat(Seat seat);
 
-    Seat querySeatBySeatId(String SeatId);
-
     List<Seat> queryAllSeat();
+
+    Seat querySeatBySeatId(String SeatId);
 
 }

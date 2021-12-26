@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ReserveMapper">
+
+    <insert id="addReserve" parameterType="com.pojo.Reserve">
+        insert into library.reserve(ReserveDate, BeginTime, EndTime, VerifyCode, SeatId, UserId,ReserveStatus,ReserveFloor)
+        value (#{ReserveDate},#{BeginTime},#{EndTime},#{VerifyCode},#{SeatId},#{UserId},#{ReserveStatus},#{ReserveFloor});
+    </insert>
+
+    <update id="updateReserve" parameterType="com.pojo.Reserve">
+        update library.reserve set ReserveDate=#{ReserveDate},BeginTime=#{BeginTime},
+                                   EndTime=#{EndTime},VerifyCode=#{VerifyCode},SeatId=#{SeatId},
+                                   UserId=#{UserId},ReserveStatus=#{ReserveStatus},ReserveFloor=#{ReserveFloor}
+        where ReserveId=#{ReserveId}
+    </update>
+
+    <select id="findReserveByReserveId" parameterType="int" resultType="com.pojo.Reserve">
+        select * from library.reserve where ReserveId =#{ReserveId};
+    </select>
+
+    <select id="findReserveByConditions" parameterType="com.pojo.Reserve" resultMap="resultMap">
+        select * from library.reserve r,library.seat s
+        where r.SeatId=s.SeatId
+          and r.ReserveFloor=#{ReserveFloor}
+          and ReserveDate = #{ReserveDate}
+          and (
+                (BeginTime &lt;= #{BeginTime} and EndTime > #{BeginTime}) OR
+                (EndTime >= #{EndTime} and BeginTime &lt; #{EndTime}) OR
+                (BeginTime >= #{BeginTime} and EndTime &lt;= #{EndTime})
+            );
+    </select>
+
+    <delete id="deleteReserveByReserveId" parameterType="int">
+        delete from library.reserve where ReserveId = #{ReserveId};
+    </delete>
+
+    <delete id="deleteReserveByUserId" parameterType="int">
+        delete from library.reserve where UserId = #{UserId};
+    </delete>
+
+    <select id="findReserveByUserId" resultMap="resultMap" parameterType="int">
+        select * from library.reserve r,library.seat s ,library.user u
+        where r.SeatId=s.SeatId and r.UserId = u.UserId and u.UserId=#{UserId}
+        order by ReserveDate,BeginTime asc;
+    </select>
+
+    <select id="findAll" resultMap="resultMap">
+        select * from library.reserve r,library.seat s,library.user u
+        where r.SeatId=s.SeatId and r.UserId = u.UserId;
+    </select>
+
+    <select id="findOutDateNum" resultType="int" parameterType="com.pojo.Reserve">
+        select count(*) from library.reserve
+        where UserId = #{UserId}
+        and ((ReserveDate &lt; #{ReserveDate})
+        or (ReserveDate = #{ReserveDate}and(EndTime &lt;= #{EndTime})));
+    </select>
+
+    <delete id="deleteOutDate" parameterType="com.pojo.Reserve">
+        delete from library.reserve
+        where UserId = #{UserId}
+          and ((ReserveDate &lt; #{ReserveDate})
+            or (ReserveDate = #{ReserveDate}and(EndTime &lt;= #{EndTime})));
+    </delete>
+
+    <resultMap id="resultMap" type="com.pojo.Reserve" autoMapping="true">
+        <id column="ReserveId" property="ReserveId"/>
+        <result column="ReserveDate" property="ReserveDate"/>
+        <result column="BeginTime" property="BeginTime"/>
+        <result column="EndTime" property="EndTime"/>
+        <result column="VerifyCode" property="VerifyCode"/>
+        <result column="SeatId" property="SeatId"/>
+        <result column="UserId" property="UserId"/>
+        <result column="ReserveStatus" property="ReserveStatus"/>
+        <result column="ReserveFloor" property="ReserveFloor"/>
+
+        <association property="seat" javaType="com.pojo.Seat" autoMapping="true" >
+            <id column="SeatId" property="SeatId"/>
+            <result column="SeatPosition" property="SeatPosition"/>
+            <result column="SeatFloor" property="SeatFloor"/>
+            <result column="SeatStatus" property="SeatStatus"/>
+        </association>
+
+        <association property="user" javaType="com.pojo.User" autoMapping="true" >
+            <id column="UserId" property="UserId"/>
+            <result column="UserName" property="UserName"/>
+            <result column="Password" property="Password"/>
+            <result column="BreachNum" property="BreachNum"/>
+            <result column="Permission" property="Permission"/>
+        </association>
+
+    </resultMap>
+
+</mapper>

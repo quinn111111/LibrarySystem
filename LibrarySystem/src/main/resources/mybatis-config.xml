@@ -9,10 +9,10 @@
     </typeAliases>
 
     <mappers>
-        <mapper resource="Mapper/SeatMapper.xml"/>
-        <mapper resource="Mapper/SeatOrderMapper.xml"/>
-        <mapper resource="Mapper/UserMapper.xml"/>
-        <mapper resource="Mapper/UserInLibMapper.xml"/>
+        <mapper resource="Mappers/ReserveMapper.xml"/>
+        <mapper resource="Mappers/UserMapper.xml"/>
+        <mapper resource="Mappers/SeatMapper.xml"/>
+        <mapper resource="Mappers/LibUserMapper.xml"/>
     </mappers>
 
 </configuration>

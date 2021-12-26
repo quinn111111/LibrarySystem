@@ -1,12 +1,17 @@
 package com.pojo;
 
+import java.util.List;
+
 public class User {
+
     private int UserId;
     private String UserName;
     private String Password;
+    private int BreachNum;
     private String Permission;
-    private String Balance;
-    private String BreachNum;
+    private LibUser libUser;
+    private List<Reserve> reserveList;
+
 
     @Override
     public String toString() {
@@ -14,9 +19,10 @@ public class User {
                 "UserId=" + UserId +
                 ", UserName='" + UserName + '\'' +
                 ", Password='" + Password + '\'' +
+                ", BreachNum=" + BreachNum +
                 ", Permission='" + Permission + '\'' +
-                ", Balance='" + Balance + '\'' +
-                ", BreachNum='" + BreachNum + '\'' +
+                ", libUser=" + libUser +
+                ", reserveList=" + reserveList +
                 '}';
     }
 
@@ -44,6 +50,14 @@ public class User {
         Password = password;
     }
 
+    public int getBreachNum() {
+        return BreachNum;
+    }
+
+    public void setBreachNum(int breachNum) {
+        BreachNum = breachNum;
+    }
+
     public String getPermission() {
         return Permission;
     }
@@ -52,19 +66,19 @@ public class User {
         Permission = permission;
     }
 
-    public String getBalance() {
-        return Balance;
+    public LibUser getLibUser() {
+        return libUser;
     }
 
-    public void setBalance(String balance) {
-        Balance = balance;
+    public void setLibUser(LibUser libUser) {
+        this.libUser = libUser;
     }
 
-    public String getBreachNum() {
-        return BreachNum;
+    public List<Reserve> getReserveList() {
+        return reserveList;
     }
 
-    public void setBreachNum(String breachNum) {
-        BreachNum = breachNum;
+    public void setReserveList(List<Reserve> reserveList) {
+        this.reserveList = reserveList;
     }
 }

@@ -1,19 +1,19 @@
 package com.service;
 
+import com.pojo.Reserve;
 import com.pojo.User;
 
 import java.util.List;
 
 public interface UserService {
 
+    List<User> findAllUser();
     int addUser(User user);
-
+    User findUserByUserId(int UserId);
+    int updateUser(User user);
     int deleteUserByUserId(int UserId);
 
-    int updateUser(User user);
+    int findBreachNum(int UserId);
 
-    User queryUserByUserId(int UserId);
-
-    List<User> queryAllUser();
-
+    int updateBreachNum(User user);
 }

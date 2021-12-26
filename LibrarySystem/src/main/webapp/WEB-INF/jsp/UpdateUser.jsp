@@ -13,11 +13,6 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script>
-        function toVaild() {
-            alert("提交成功！");
-        }
-    </script>
 </head>
 <body>
 
@@ -25,7 +20,7 @@
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="FirstPage">座位预约</a>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/Reserve/FirstPage">座位预约</a>
             </div>
             <div>
                 <ul class="nav navbar-nav">
@@ -36,15 +31,17 @@
                         <ul class="dropdown-menu">
                             <li><a href="#">个人信息</a></li>
                             <li class="divider"></li>
-                            <li><a href="MyOrder">我的预约</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Reserve/MyReserve">我的预约</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/LibUser/ManageLibUser">管理在馆人员</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/User/ManageUser">管理用户</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/Seat/ManageSeat">管理座位</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/Reserve/ManageReserve">管理预约</a></li>
                             <li class="divider"></li>
                             <li><a href="#">退出登录</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/userInLib/ManageUserInLib">管理在馆人员</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/user/ManageUser">管理用户</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/seat/ManageSeat">管理座位</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -52,7 +49,6 @@
         </div>
     </nav>
 </div>
-
 
 <div style="padding-top:10%;padding-left: 30%;padding-right: 30%;">
     <form class="form-horizontal" role="form"
@@ -64,11 +60,20 @@
                     action="UpdateUser"
                 </c:when>
             </c:choose>
-          onsubmit="toVaild()">
+          onsubmit="alert('提交成功！')">
         <div class="form-group">
             <label for="UserId" class="col-sm-2 control-label">用户编号：</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="UserId" name="UserId" value="${user.userId}" readonly>
+                <input type="text" class="form-control" id="UserId" name="UserId" value="${user.userId}"
+                <c:choose>
+                <c:when test="${flag=='add'}">
+                       required
+                </c:when>
+                <c:when test="${flag=='update'}">
+                       readonly
+                </c:when>
+                </c:choose>
+                >
             </div>
         </div>
         <div class="form-group">
@@ -81,21 +86,13 @@
         <div class="form-group">
             <label for="password" class="col-sm-2 control-label">密码：</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="password" name="password" value="${user.password}" required>
+                <input type="password" class="form-control" id="password" name="password" value="${user.password}" required>
             </div>
         </div>
-
         <div class="form-group">
             <label for="permission" class="col-sm-2 control-label">权限：</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="permission" name="permission" value="${user.permission}" required>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="balance" class="col-sm-2 control-label">余额：</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="balance" name="balance" value="${user.balance}">
             </div>
         </div>
         <div class="form-group">

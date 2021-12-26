@@ -14,28 +14,15 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script>
-        function Warning(){
-            var x;
-            var r=confirm("用户一经删除所有信息均会被删除，且不可恢复，请谨慎删除该用户！");
-            if (r==true){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-    </script>
 
 </head>
 <body>
-
 
 <div>
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="FirstPage">座位预约</a>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/Reserve/FirstPage">座位预约</a>
             </div>
             <div>
                 <ul class="nav navbar-nav">
@@ -46,15 +33,17 @@
                         <ul class="dropdown-menu">
                             <li><a href="#">个人信息</a></li>
                             <li class="divider"></li>
-                            <li><a href="MyOrder">我的预约</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Reserve/MyReserve">我的预约</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/LibUser/ManageLibUser">管理在馆人员</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/User/ManageUser">管理用户</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/Seat/ManageSeat">管理座位</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/Reserve/ManageReserve">管理预约</a></li>
                             <li class="divider"></li>
                             <li><a href="#">退出登录</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/userInLib/ManageUserInLib">管理在馆人员</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/user/ManageUser">管理用户</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/seat/ManageSeat">管理座位</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -73,7 +62,6 @@
             <th>用户名</th>
             <th>密码</th>
             <th>权限</th>
-            <th>余额</th>
             <th>违约次数</th>
             <th>操作
                 <a href="AddUserPage">
@@ -89,13 +77,12 @@
                 <td>${user.userName}</td>
                 <td>${user.password}</td>
                 <td>${user.permission}</td>
-                <td>${user.balance}</td>
                 <td>${user.breachNum}</td>
                 <td>
                     <a href="UpdateUserPage?UserId=${user.userId}">
                         <button type="button" class="btn btn-default">修改</button>
                     </a>
-                    <a href="DeleteUser?UserId=${user.userId}" onsubmit="Warning()">
+                    <a href="DeleteUser?UserId=${user.userId}" onclick="return confirm('信息一旦删除不可恢复，确定删除?');">
                         <button type="button" class="btn btn-default">删除</button>
                     </a>
                 </td>

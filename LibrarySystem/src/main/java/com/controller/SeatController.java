@@ -1,6 +1,5 @@
 package com.controller;
 
-
 import com.pojo.Seat;
 import com.service.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/seat")
+@RequestMapping("/Seat")
 public class SeatController {
-
 
     @Autowired
     @Qualifier("seatServiceImpl")
@@ -30,6 +28,7 @@ public class SeatController {
     @RequestMapping("UpdateSeatPage")
     public String UpdateSeatPage(Model model,String SeatId){
         Seat seat = seatService.querySeatBySeatId(SeatId);
+        System.out.println(seat);
         model.addAttribute("seat",seat);
         return "UpdateSeat";
     }
@@ -39,7 +38,5 @@ public class SeatController {
         int flag = seatService.updateSeat(seat);
         return "redirect:ManageSeat";
     }
-
-
 
 }

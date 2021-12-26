@@ -1,8 +1,9 @@
 package com.controller;
 
+import com.pojo.LibUser;
 import com.pojo.User;
-import com.service.SeatOrderService;
-import com.service.UserInLibService;
+import com.service.LibUserService;
+import com.service.ReserveService;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,41 +14,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/User")
 public class UserController {
-
     @Autowired
     @Qualifier("userServiceImpl")
     public UserService userService;
 
     @Autowired
-    @Qualifier("seatOrderServiceImpl")
-    public SeatOrderService seatOrderService;
+    @Qualifier("reserveServiceImpl")
+    public ReserveService reserveService;
 
     @Autowired
-    @Qualifier("userInLibServiceImpl")
-    public UserInLibService userInLibService;
+    @Qualifier("libUserServiceImpl")
+    public LibUserService libUserService;
 
-    public UserService getUserService() {
-        return userService;
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    @RequestMapping("ManageUser")
+    @RequestMapping("/ManageUser")
     public String ManageUser(Model model){
-        List<User> userList = userService.queryAllUser();
+        List<User> userList = userService.findAllUser();
         model.addAttribute("userList",userList);
         return "ManageUser";
     }
 
+    @RequestMapping("/AddUserPage")
+    public String AddUserPage(Model model){
+        model.addAttribute("flag","add");
+        return "UpdateUser";
+    }
+
+    @RequestMapping("AddUser")
+    public String AddUser(Model model,User user){
+        int flag = userService.addUser(user);
+        return "redirect:ManageUser";
+    }
+
+
     @RequestMapping("UpdateUserPage")
     public String UpdateUserPage(Model model,int UserId){
-        User user = userService.queryUserByUserId(UserId);
-        model.addAttribute("flag","update");
+        User user = userService.findUserByUserId(UserId);
         model.addAttribute("user",user);
+        model.addAttribute("flag","update");
         return "UpdateUser";
     }
 
@@ -57,25 +62,11 @@ public class UserController {
         return "redirect:ManageUser";
     }
 
-
     @RequestMapping("DeleteUser")
     public String DeleteUser(Model model,int UserId){
-        int flag = seatOrderService.deleteSeatOrderByUserId(UserId);
+        int flag = libUserService.deleteLibUserByUserId(UserId);
+        flag = reserveService.deleteReserveByUserId(UserId);
         flag = userService.deleteUserByUserId(UserId);
-        flag = userInLibService.deleteUserInLibByUserId(UserId);
         return "redirect:ManageUser";
     }
-
-    @RequestMapping("AddUserPage")
-    public String UpdateUser(Model model){
-        model.addAttribute("flag","add");
-        return "UpdateUser";
-    }
-
-    @RequestMapping("AddUser")
-    public String DeleteUser(Model model,User user){
-        int flag = userService.addUser(user);
-        return "redirect:ManageUser";
-    }
-
 }

@@ -13,11 +13,6 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script>
-        function toVaild() {
-            alert("提交成功！");
-        }
-    </script>
 </head>
 <body>
 
@@ -26,7 +21,7 @@
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="FirstPage">座位预约</a>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/Reserve/FirstPage">座位预约</a>
             </div>
             <div>
                 <ul class="nav navbar-nav">
@@ -37,15 +32,17 @@
                         <ul class="dropdown-menu">
                             <li><a href="#">个人信息</a></li>
                             <li class="divider"></li>
-                            <li><a href="MyOrder">我的预约</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Reserve/MyReserve">我的预约</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/LibUser/ManageLibUser">管理在馆人员</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/User/ManageUser">管理用户</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/Seat/ManageSeat">管理座位</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/Reserve/ManageReserve">管理预约</a></li>
                             <li class="divider"></li>
                             <li><a href="#">退出登录</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/userInLib/ManageUserInLib">管理在馆人员</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/user/ManageUser">管理用户</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/seat/ManageSeat">管理座位</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -55,8 +52,8 @@
 </div>
 
 <div style="padding-top:10%;padding-left: 30%;padding-right: 30%;">
-    <form class="form-horizontal" role="form" action="UpdateSeat" onsubmit="toVaild()">
-        <div class="form-group">
+    <form class="form-horizontal" role="form" action="UpdateSeat" onsubmit="alert('提交成功！')">
+    <div class="form-group">
             <label for="SeatId" class="col-sm-2 control-label">座位编号：</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="SeatId" name="SeatId" value="${seat.seatId}" readonly>
@@ -70,9 +67,9 @@
         </div>
 
         <div class="form-group">
-            <label for="floor" class="col-sm-2 control-label">所在楼层：</label>
+            <label for="seatFloor" class="col-sm-2 control-label">所在楼层：</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="floor" name="floor" value="${seat.floor}" required>
+                <input type="text" class="form-control" id="seatFloor" name="seatFloor" value="${seat.seatFloor}" required>
             </div>
         </div>
 
@@ -84,7 +81,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">确认</button>
+                <button type="submit" class="btn btn-default" onclick="confirm('成功！');">确认</button>
                 <a href="ManageSeat">
                     <button type="button" class="btn btn-default">取消</button>
                 </a>

@@ -1,19 +1,24 @@
 package com.dao;
 
+import com.pojo.Reserve;
 import com.pojo.User;
 
 import java.util.List;
 
 public interface UserMapper {
 
+    List<User> findAllUser();
+
     int addUser(User user);
 
-    int deleteUserByUserId(int UserId);
+    User findUserByUserId(int UserId);
 
     int updateUser(User user);
 
-    User queryUserByUserId(int UserId);
+    int deleteUserByUserId(int UserId);
 
-    List<User> queryAllUser();
+    int findBreachNum(int UserId);
+
+    int updateBreachNum(User user);
 
 }

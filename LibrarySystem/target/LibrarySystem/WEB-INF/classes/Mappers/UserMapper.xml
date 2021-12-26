@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserMapper">
+
+    <insert id="addUser" parameterType="com.pojo.User">
+        insert into library.user(UserId, UserName, Password, BreachNum, Permission)
+        VALUE (#{UserId},#{UserName},#{Password},#{BreachNum},#{Permission});
+    </insert>
+
+    <update id="updateUser" parameterType="com.pojo.User">
+        update library.user
+        set
+        <if test="UserName != null">
+            UserName = #{UserName},
+        </if>
+        <if test="UserName != null">
+            Password=#{Password},
+        </if>
+        <if test="Permission != null">
+            Permission=#{Permission},
+        </if>
+        <if test="BreachNum != null">
+            BreachNum=#{BreachNum}
+        </if>
+        where UserId = #{UserId};
+    </update>
+
+    <delete id="deleteUserByUserId" parameterType="int">
+        delete from library.user where UserId = #{UserId};
+    </delete>
+
+
+    <select id="findUserByUserId" parameterType="int" resultType="User">
+        select * from library.user where UserId=#{UserId};
+    </select>
+
+    <select id="findAllUser" resultType="User">
+        select * from library.user;
+    </select>
+
+    <select id="findUserAndReserve" resultMap="resultMap">
+        select * from library.user u,library.reserve r
+        where u.UserId = r.UserId;
+    </select>
+
+    <select id="findBreachNum" resultType="int" parameterType="int">
+        select BreachNum from library.user where UserId=#{UserId}
+    </select>
+
+    <update id="updateBreachNum" parameterType="com.pojo.User">
+        update library.user
+        set BreachNum = #{BreachNum}
+        where UserId = #{UserId}
+    </update>
+
+    <resultMap id="resultMap" type="com.pojo.User" autoMapping="true">
+        <id column="UserId" property="UserId"/>
+        <result column="UserName" property="UserName"/>
+        <result column="Password" property="Password"/>
+        <result column="BreachNum" property="BreachNum"/>
+        <result column="Permission" property="Permission"/>
+
+        <collection property="reserve" javaType="com.pojo.Reserve" autoMapping="true">
+            <id column="ReserveId" property="ReserveId"/>
+            <result column="ReserveDate" property="ReserveDate"/>
+            <result column="BeginTime" property="BeginTime"/>
+            <result column="EndTime" property="EndTime"/>
+            <result column="VerifyCode" property="VerifyCode"/>
+            <result column="SeatId" property="SeatId"/>
+            <result column="UserId" property="UserId"/>
+            <result column="ReserveStatus" property="ReserveStatus"/>
+            <result column="ReserveFloor" property="ReserveFloor"/>
+        </collection>
+
+    </resultMap>
+
+
+</mapper>

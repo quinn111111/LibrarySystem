@@ -1,20 +1,23 @@
 package com.pojo;
 
+import java.util.List;
 
 public class Seat {
 
     private String SeatId;
     private String SeatPosition;
+    private String SeatFloor;
     private String SeatStatus;
-    private String Floor;
+    private List<Reserve> reserves;
 
     @Override
     public String toString() {
         return "Seat{" +
                 "SeatId='" + SeatId + '\'' +
                 ", SeatPosition='" + SeatPosition + '\'' +
+                ", SeatFloor='" + SeatFloor + '\'' +
                 ", SeatStatus='" + SeatStatus + '\'' +
-                ", Floor='" + Floor + '\'' +
+                ", reserves=" + reserves +
                 '}';
     }
 
@@ -34,6 +37,14 @@ public class Seat {
         SeatPosition = seatPosition;
     }
 
+    public String getSeatFloor() {
+        return SeatFloor;
+    }
+
+    public void setSeatFloor(String seatFloor) {
+        SeatFloor = seatFloor;
+    }
+
     public String getSeatStatus() {
         return SeatStatus;
     }
@@ -42,11 +53,13 @@ public class Seat {
         SeatStatus = seatStatus;
     }
 
-    public String getFloor() {
-        return Floor;
+    public List<Reserve> getReserves() {
+        return reserves;
     }
 
-    public void setFloor(String floor) {
-        Floor = floor;
+    public void setReserves(List<Reserve> reserves) {
+        this.reserves = reserves;
     }
 }
+
+

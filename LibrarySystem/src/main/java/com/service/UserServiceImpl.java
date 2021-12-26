@@ -1,6 +1,7 @@
 package com.service;
 
 import com.dao.UserMapper;
+import com.pojo.Reserve;
 import com.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,14 +12,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
 
     @Autowired
-    private UserMapper userMapper;
+    public UserMapper userMapper;
 
-    public UserMapper getUserMapper() {
-        return userMapper;
-    }
-
-    public void setUserMapper(UserMapper userMapper) {
-        this.userMapper = userMapper;
+    @Override
+    public List<User> findAllUser() {
+        return userMapper.findAllUser();
     }
 
     @Override
@@ -27,8 +25,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public int deleteUserByUserId(int UserId) {
-        return userMapper.deleteUserByUserId(UserId);
+    public User findUserByUserId(int UserId) {
+        return userMapper.findUserByUserId(UserId);
     }
 
     @Override
@@ -37,12 +35,18 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User queryUserByUserId(int UserId) {
-        return userMapper.queryUserByUserId(UserId);
+    public int deleteUserByUserId(int UserId) {
+        return userMapper.deleteUserByUserId(UserId);
     }
 
     @Override
-    public List<User> queryAllUser() {
-        return userMapper.queryAllUser();
+    public int findBreachNum(int UserId) {
+        return userMapper.findBreachNum(UserId);
     }
+
+    @Override
+    public int updateBreachNum(User user) {
+        return userMapper.updateBreachNum(user);
+    }
+
 }

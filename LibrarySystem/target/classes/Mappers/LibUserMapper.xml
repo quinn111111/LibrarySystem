@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.LibUserMapper">
+    <delete id="deleteLibUserByUserId" parameterType="int">
+        delete from library.libuser where UserId = #{UserId};
+    </delete>
+
+    <insert id="addLibUser" parameterType="com.pojo.LibUser">
+        insert into library.libuser(UserId, EntryTime) VALUE (#{UserId},#{EntryTime});
+    </insert>
+
+    <update id="updateLibUser" parameterType="com.pojo.LibUser">
+        update library.libuser set EntryTime=#{EntryTime}
+        where UserId=#{UserId};
+    </update>
+
+    <select id="queryAllLibUser" resultType="com.pojo.LibUser">
+        select * from library.libuser;
+    </select>
+
+    <select id="queryLibUserByUserId" resultType="com.pojo.LibUser" parameterType="int">
+        select * from library.libuser where UserId=#{UserId};
+    </select>
+
+</mapper>

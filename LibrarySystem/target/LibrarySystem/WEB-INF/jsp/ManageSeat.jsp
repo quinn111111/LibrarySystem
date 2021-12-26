@@ -21,7 +21,7 @@
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="FirstPage">座位预约</a>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/Reserve/FirstPage">座位预约</a>
             </div>
             <div>
                 <ul class="nav navbar-nav">
@@ -32,15 +32,17 @@
                         <ul class="dropdown-menu">
                             <li><a href="#">个人信息</a></li>
                             <li class="divider"></li>
-                            <li><a href="MyOrder">我的预约</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Reserve/MyReserve">我的预约</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/LibUser/ManageLibUser">管理在馆人员</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/User/ManageUser">管理用户</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/Seat/ManageSeat">管理座位</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/Reserve/ManageReserve">管理预约</a></li>
                             <li class="divider"></li>
                             <li><a href="#">退出登录</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/userInLib/ManageUserInLib">管理在馆人员</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/user/ManageUser">管理用户</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/seat/ManageSeat">管理座位</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -65,7 +67,7 @@
         <c:forEach var="seat" items="${seatList}">
             <tr>
                 <td>${seat.seatId}</td>
-                <td>${seat.floor}</td>
+                <td>${seat.seatFloor}</td>
                 <td>${seat.seatPosition}</td>
                 <td>${seat.seatStatus}</td>
                 <td>
